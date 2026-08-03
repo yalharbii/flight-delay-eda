@@ -4,7 +4,12 @@ from pathlib import Path
 
 import pandas as pd
 
-from eda import airport_summary, load_data, missing_summary, quantitative_summary
+from eda import (
+    airport_summary,
+    load_data,
+    missing_summary,
+    quantitative_summary,
+)
 
 
 def test_load_data() -> None:
@@ -28,7 +33,10 @@ def test_quantitative_summary() -> None:
     """Summary values should agree with independently computed values."""
     data = load_data()
     summary = quantitative_summary(data)
-    assert summary.loc["DEPARTURE_DELAY", "min"] == data["DEPARTURE_DELAY"].min()
+    assert (
+        summary.loc["DEPARTURE_DELAY", "min"]
+        == data["DEPARTURE_DELAY"].min()
+    )
     assert summary.loc["DISTANCE", "max"] == 3711
 
 

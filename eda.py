@@ -83,7 +83,10 @@ def create_figures(data: pd.DataFrame, output_dir: Path = FIGURE_DIR) -> None:
     plt.savefig(output_dir / "delay_causes.png", dpi=200)
     plt.close()
 
-    time_rates = data.groupby("TIME_OF_DAY", observed=False)["DELAY_OVER_30"].mean()
+    time_rates = (
+        data.groupby("TIME_OF_DAY", observed=False)["DELAY_OVER_30"]
+        .mean()
+    )
     ax = (time_rates * 100).plot(kind="bar")
     ax.set_title("Share of Flights Delayed More Than 30 Minutes")
     ax.set_xlabel("Scheduled time of day")
@@ -108,7 +111,10 @@ def main() -> None:
     data = load_data()
     create_figures(data)
     write_tables(data)
-    print(f"Rows: {data.shape[0]}, columns after feature engineering: {data.shape[1]}")
+    print(
+        f"Rows: {data.shape[0]}, "
+        f"columns after feature engineering: {data.shape[1]}"
+    )
     print("\nMissing values:\n", missing_summary(data))
     print("\nQuantitative summaries:\n", quantitative_summary(data))
     print("\nAirport summaries:\n", airport_summary(data))
